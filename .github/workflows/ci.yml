@@ -12,21 +12,22 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        node: [12, 14, 16]
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
         with:
-          node-version: "${{ matrix.node }}"
-          cache: npm
+          persist-credentials: false
 
       - name: Install npm dependencies
         run: npm ci
 
       - name: Test
         run: npm test
+
+      - name: Deploy 🚀
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: dist

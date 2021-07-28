@@ -16,15 +16,15 @@
 // Import just what we need
 
 // If you're importing tooltips or popovers, be sure to include our Popper.js dependency
-import "../../node_modules/@popperjs/core/dist/umd/popper.min.js";
+import "@popperjs/core/dist/umd/popper.min";
 
 // Import the required DOM management plugins first
-import "../../node_modules/bootstrap/js/dist/dom/data.js";
-import "../../node_modules/bootstrap/js/dist/dom/event-handler.js";
-import "../../node_modules/bootstrap/js/dist/dom/manipulator.js";
-import "../../node_modules/bootstrap/js/dist/dom/selector-engine.js";
-import "../../node_modules/bootstrap/js/dist/base-component.js";
+import "bootstrap/js/dist/dom/data";
+import "bootstrap/js/dist/dom/event-handler";
+import "bootstrap/js/dist/dom/manipulator";
+import "bootstrap/js/dist/dom/selector-engine";
+import "bootstrap/js/dist/base-component";
 
 // Then your specific components
-import "../../node_modules/bootstrap/js/dist/dropdown.js";
-import "../../node_modules/bootstrap/js/dist/offcanvas.js";
+import "bootstrap/js/dist/dropdown";
+import "bootstrap/js/dist/offcanvas";

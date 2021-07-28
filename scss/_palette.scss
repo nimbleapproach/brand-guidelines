@@ -1,0 +1,22 @@
+.palette {
+  line-height: 1.3;
+
+  .primary-variant {
+    background-color: $primary-variant;
+  }
+  .secondary-variant {
+    background-color: $secondary-variant;
+  }
+  .on-dark {
+    background-color: $body-color;
+  }
+  .surface {
+    background-color: $surface;
+  }
+}
+.bg-dark {
+  background-color: $bg-dark;
+}
+.surface-dark {
+  background-color: $surface-dark;
+}

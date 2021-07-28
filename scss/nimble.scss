@@ -27,14 +27,23 @@
 // Toggle global options
 $enable-gradients: true;
 $enable-shadows: true;
-
-$offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+$enable-important-utilities: false;
 
 // Customize some defaults
-$body-color: #333;
-$body-bg: #fff;
-$border-radius: .4rem;
-$success: #7952b3;
+$primary: #ff9100;
+$primary-variant: #ff7100;
+$secondary: #0dffd3;
+$secondary-variant: #12b395;
+$bg-dark: #1c1d20;
+$surface: #f4f4f4;
+$surface-dark: #424242;
+
+$body-color: #212529;
+$body-bg: #e5e5e5;
+$border-radius: 1.1rem;
+$border-color: rgb(180, 181, 182);
+
+$headings-font-weight: 500;
 
 // Required
 @import "bootstrap/scss/functions";
@@ -44,15 +53,15 @@ $success: #7952b3;
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
 
-@import "bootstrap/scss/type";
+// @import "bootstrap/scss/type";
 // @import "bootstrap/scss/images";
-@import "bootstrap/scss/containers";
+// @import "bootstrap/scss/containers";
 @import "bootstrap/scss/grid";
 // @import "bootstrap/scss/tables";
-// @import "bootstrap/scss/forms";
+@import "bootstrap/scss/forms";
 @import "bootstrap/scss/buttons";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
+// @import "bootstrap/scss/transitions";
+// @import "bootstrap/scss/dropdown";
 // @import "bootstrap/scss/button-group";
 // @import "bootstrap/scss/nav";
 // @import "bootstrap/scss/navbar"; // Requires nav
@@ -64,14 +73,14 @@ $success: #7952b3;
 // @import "bootstrap/scss/alert";
 // @import "bootstrap/scss/progress";
 // @import "bootstrap/scss/list-group";
-@import "bootstrap/scss/close";
+// @import "bootstrap/scss/close";
 // @import "bootstrap/scss/toasts";
-@import "bootstrap/scss/modal"; // Requires transitions
+// @import "bootstrap/scss/modal"; // Requires transitions
 // @import "bootstrap/scss/tooltip";
 // @import "bootstrap/scss/popover";
 // @import "bootstrap/scss/carousel";
 // @import "bootstrap/scss/spinners";
-@import "bootstrap/scss/offcanvas"; // Requires transitions
+// @import "bootstrap/scss/offcanvas"; // Requires transitions
 
 // Helpers
 // @import "helpers";
@@ -84,13 +93,38 @@ $success: #7952b3;
 // Custom styles
 //
 
-@import "icon-list";
+@import "./fonts";
+@import "./palette";
+@import "./browser";
 
 body {
-  padding: 3rem 1.5rem;
+  font-family: "Bariol Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-// Style Bootstrap icons
-.bi {
-  fill: currentColor;
+header h1 {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    width: 60px;
+  }
+}
+
+.logo {
+  img {
+    display: block;
+    width: 200px;
+  }
+  svg {
+    width: 100px;
+    fill: $primary;
+  }
+}
+
+.logo-black {
+  filter: invert(.7);
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
 }

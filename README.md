@@ -1,6 +1,6 @@
-<p align="center">
-  <img src=".github/logo.png" width="300" height="175" alt="Bootstrap npm logo">
-</p>
+<h2 align="center">
+  <img src=".github/logo-100x100.png" width="75" height="75" alt="nimble logo" style="vertical-align:middle"> Nimble Brand Guidelines
+</h2>
 
 <h3 align="center">Bootstrap npm starter template</h3>
 
@@ -8,7 +8,7 @@
 
 ## About
 
-`bootstrap-npm-starter` is a GitHub template repository for creating new Bootstrap-powered npm projects, maintained by Bootstrap co-author @mdo. You can also use it as your own Bootstrap prototyping sandbox. It's built with Bootstrap v4 with plans to update for v5.
+`bootstrap-npm-starter` is a GitHub template repository for creating new Bootstrap-powered npm projects, maintained by Bootstrap co-author @mdo. You can also use it as your own Bootstrap prototyping sandbox. It's built with Bootstrap v5.
 
 [![Build Status](https://github.com/twbs/bootstrap-npm-starter/workflows/CI/badge.svg)](https://github.com/twbs/bootstrap-npm-starter/actions)
 
@@ -23,7 +23,7 @@ Setup as a starter template, you can easily generate a new GitHub repository. Fr
 - Includes [Bootstrap Icons](https://icons.getbootstrap.com) (v1.5.0), which includes over 1,300 icons available as SVGs and web fonts.
 - npm scripts (see `package.json`) for compiling and autoprefixing Sass, watching for changes, and starting a basic local server.
 - Example stylesheet (`scss/starter.scss`) highlighting two ways to include and customize Bootstrap.
-- Example JavaScript file (`assets/js/starter.js`) showing how to import all of Bootstrap, or just the parts you need.
+- Example JavaScript file (`dist/assets/js/starter.js`) showing how to import all of Bootstrap, or just the parts you need.
 
 ## Usage
 
@@ -93,12 +93,12 @@ You can add more options here, or import the entire `bootstrap-bundle.min.js` fi
 
 [PurgeCSS](https://purgecss.com/) is a [PostCSS](https://postcss.org) plugin that removes unused CSS based on your site's HTML. It finds rulesets that are unused by your HTML and removes them, ensuring only what's needed is sent to your site's visitors while improving file size and performance.
 
-We've included a single npm script that runs PurgeCSS against our single `index.html` file to remove unused styles from `assets/css/starter.css`.
+We've included a single npm script that runs PurgeCSS against our single `index.html` file to remove unused styles from `dist/assets/css/starter.css`.
 
 To purge your CSS, run `npm run css-purge` from the command line. This executes the following:
 
 ```shell
-npm purgecss --css assets/css/starter.css --content index.html --output assets/css/
+npm purgecss --css dist/assets/css/starter.css --content index.html --output dist/assets/css/
 ```
 
 PurgeCSS is a PostCSS plugin and [can be configured](https://purgecss.com/configuration.html) to your exact needs with a little extra effort, including additional [command line options](https://purgecss.com/CLI.html).
