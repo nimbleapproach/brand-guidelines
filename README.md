@@ -1,5 +1,5 @@
 <h2 align="center">
-  <img src=".github/logo-100x100.png" width="75" height="75" alt="nimble logo" style="vertical-align:middle"> Nimble Brand Guidelines
+  <img src=".github/logo-100x100.png" width="19" height="19" alt="nimble logo" style="vertical-align:middle"> Nimble Brand Guidelines
 </h2>
 
 <h3 align="center">Bootstrap npm starter template</h3>
