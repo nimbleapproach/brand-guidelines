@@ -112,19 +112,27 @@ header h1 {
 
 .logo {
   img {
-    display: block;
     width: 200px;
   }
-  svg {
-    width: 100px;
-    fill: $primary;
-  }
 }
 
-.logo-black {
-  filter: invert(.7);
+.btn.btn-primary,
+.btn.btn-primary:hover,
+.btn.btn-primary:active {
+  color: $white;
 }
 
-.btn-outline-primary:hover {
-  color: #fff;
+/* stylelint-disable */
+input[type="range"]{
+  pointer-events: none;
 }
+input[type="range"]::-webkit-slider-thumb{
+  pointer-events: auto;
+}
+input[type="range"]::-moz-range-thumb{
+  pointer-events: auto;
+}
+input[type="range"]::-ms-thumb{
+  pointer-events: auto;
+}
+/* stylelint-enable */
