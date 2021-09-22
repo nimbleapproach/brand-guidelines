@@ -165,13 +165,13 @@
       <h2 class="mb-5">Logo</h2>
       <div class="col-sm-6 d-flex justify-content-between align-items-center">
         <div id="logo-light" class="logo p-5">
-          <img src="./assets/img/logo-dark.svg" alt="nimble logo with dark text">
+          <img src="assets/img/logo-dark.svg" alt="nimble logo with dark text">
         </div>
       </div>
       
       <div class="col-sm-6 d-flex justify-content-between align-items-center surface-dark">
         <div id="logo-dark" class="logo p-5">
-          <img src="./assets/img/logo-light.svg" alt="nimble logo with light text">
+          <img src="assets/img/logo-light.svg" alt="nimble logo with light text">
         </div>
       </div>
     </div>
@@ -197,6 +197,191 @@
       <img class="col-md-4 px-5" src="assets/img/illustration/service-illustrations--pop-up-squads-06d629befceee84f692127b6d3701741.svg" alt="illustration of people working together">
       <img class="col-md-4 p-5" src="assets/img/illustration/working-0f7735ff50cacf4e7865511dcba50e28.svg" alt="illustration of a person working on a laptop computer">
       <img class="col-md-4 px-5" src="assets/img/illustration/tasks-a2164a349f10071a558acab5f6f65f96.svg" alt="illustration of two people talking to each other">
+    </div>
+
+    <hr class="my-5 w-50 mx-0">
+
+    <div class="row gx-0">
+      <h2 class="mb-0">Avatar</h2>
+      <div class="col-sm-6 p-5" id="avatar">
+        <canvas id="canvas" width="640" height="360" style="width:100%"></canvas>
+      </div>
+
+      <div class="col-sm-6 p-5">
+        <div class="mb-3">
+          <label for="file" class="form-label" style="font-size: 1.5rem">Upload image</label>
+          <input id="file" class="form-control" style="padding: .2rem .75rem;" type="file" accept=".jpg, .jpeg, .png">
+        </div>
+        <div id="controls" class="d-none">
+          <div>
+            <label for="size" class="form-label" style="font-size: 1.5rem">Size</label>
+            <input type="range" class="form-range" id="size" value="0">
+          </div>
+          <div class="d-flex justify-content-between">
+            <fieldset id="filter">
+              <legend>Filter</legend>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="filter" id="filter1" value="none" checked>
+                <label class="form-check-label" for="filter1">None</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="filter" id="filter2" value="bw">
+                <label class="form-check-label" for="filter2">Black and white</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="filter" id="filter3" value="nimble">
+                <label class="form-check-label" for="filter3">Nimble</label>
+              </div>
+            </fieldset>
+            <div class="align-self-end">
+              <button id="download" type="button" class="btn btn-lg btn-primary rounded-pill mt-3">Download</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="assets/js/createjs.min.js" defer></script>
+      <script>
+        window.onload = () => {
+          var stage = new createjs.Stage('canvas');
+          var controls = document.getElementById('controls');
+          var size = document.getElementById('size');
+
+          createjs.Ticker.addEventListener('tick', () => {
+            stage.update();
+          });
+
+          var minScale = 1;
+          var imageLoad = (e) => {
+            size.value = 0;
+            var smallest = (e.target.width > e.target.height) ? 'height' : 'width';
+            bmp.scale = minScale = stage.canvas.height / e.target[smallest] + (e.path[0].currentSrc.match(/\.svg$/) ? 0 : 0.01);
+            bmp.x = (stage.canvas.width - e.target.width * bmp.scale) * .5;
+            bmp.y = (stage.canvas.height - e.target.height * bmp.scale) * .5;
+            s.x = stage.canvas.width * .5;
+            s.y = stage.canvas.height * .5;
+            bmp.cache(0, 0, bmp.image.width, bmp.image.height);
+            stage.update();
+          }
+
+          var bmp = new createjs.Bitmap('assets/img/avatar.svg');
+          bmp.image.onload = imageLoad;
+          bmp.cursor = 'move';
+          stage.addChild(bmp);
+
+          var g = new createjs.Graphics();
+          g.setStrokeStyle(4);
+          g.beginStroke('#ff9100');
+          g.drawCircle(0, 0, (stage.canvas.height - 4) * .5);
+
+          var s = new createjs.Shape(g);
+          stage.addChild(s);
+
+          bmp.mask = s;
+
+          document.getElementById('file').addEventListener('change', (e) => {
+            controls.classList.remove('d-none');
+            var file = e.target.files[0];
+            if (file.type && !file.type.startsWith('image/')) {
+              console.log('File is not an image.', file.type, file);
+              return;
+            }
+
+            var reader = new FileReader();
+            reader.addEventListener('load', (e) => {
+              var img = document.createElement('img');
+              img.src = e.target.result;
+              bmp.image = img;
+              bmp.image.onload = imageLoad;
+            });
+            reader.readAsDataURL(file);
+          });
+
+          document.getElementById('download').addEventListener('click', (e) => {
+            var link = document.createElement('a');
+            stage.canvas.width = 360;
+            bmp.x = bmp.x - 140;
+            s.x = 180;
+            stage.update();
+            link.download = 'avatar.png';
+            link.href = stage.canvas.toDataURL();
+            link.click();
+            stage.canvas.width = 640;
+            bmp.x = bmp.x + 140;
+            s.x = 320;
+            stage.update();
+          });
+
+          createjs.Touch.enable(stage);
+          stage.enableMouseOver(10);
+          stage.mouseMoveOutside = true;
+
+          var offset = {};
+          bmp.on('mousedown', (e) => {
+            offset = {
+              x: e.stageX - e.target.x,
+              y: e.stageY - e.target.y
+            };
+          })
+          
+          var confine = (x, y) => {
+            bmp.x = Math.min((stage.canvas.width - stage.canvas.height) * .5, 
+                    Math.max((stage.canvas.width + stage.canvas.height) * .5 - (bmp.image.width * bmp.scale), x));
+            bmp.y = Math.min(0, 
+                    Math.max(stage.canvas.height - (bmp.image.height * bmp.scale), y));
+          }
+
+          bmp.on('pressmove', (e) => {
+            confine(e.stageX - offset.x, e.stageY - offset.y);
+          })
+
+          size.addEventListener('input', (e) => {
+            var initW = bmp.image.width * bmp.scale;
+            var minX = (stage.canvas.width + stage.canvas.height) * .5 - (bmp.image.width * bmp.scale);
+            var maxX = (stage.canvas.width - stage.canvas.height) * .5;
+            var scaleX = 1 - (bmp.x - minX) / (maxX - minX);
+            
+            var initH = bmp.image.height * bmp.scale;
+            var minY = stage.canvas.height - (bmp.image.height * bmp.scale);
+            var maxY = 0;
+            var scaleY = 1 - (bmp.y - minY) / (maxY - minY);
+            
+            bmp.scale = minScale + parseInt(e.target.value) / 100;
+
+            var diffX = bmp.image.width * bmp.scale - initW;
+            var diffY = bmp.image.height * bmp.scale - initH;
+            
+            confine(bmp.x - diffX * scaleX, bmp.y - diffY * scaleY);
+            stage.update();
+          });
+
+          var colorMatrix = new createjs.ColorMatrix();
+          colorMatrix.adjustSaturation(-100);
+          colorMatrix.adjustContrast(30);
+          var blackAndWhiteFilter = [new createjs.ColorMatrixFilter(colorMatrix)];
+
+          var nimbleFilter = [
+            new createjs.ColorMatrixFilter(colorMatrix),
+            new createjs.ColorFilter(1, 0.57862, 0, 1)
+          ];
+
+          var filters = {
+            bw: blackAndWhiteFilter,
+            nimble: nimbleFilter
+          };
+
+          document.querySelectorAll('input[type="radio"]').forEach((radio) => {
+            radio.addEventListener('change', (e) => {
+              bmp.filters = e.target.value === 'none' ? [] : filters[e.target.value];
+              bmp.cache(0, 0, bmp.image.width, bmp.image.height);
+              
+              s.graphics.setStrokeStyle(4);
+              s.graphics.beginStroke(e.target.value === 'nimble' ? '#282B2E' : '#ff9100');
+              s.graphics.drawCircle(0, 0, (stage.canvas.height - 4) * .5);
+            })
+          })
+        }
+      </script>
     </div>
 
     <hr class="my-5">
